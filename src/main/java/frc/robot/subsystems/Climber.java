@@ -17,7 +17,7 @@ public class Climber extends SubsystemBase {
   private CANSparkMax climberMotor;
   private RelativeEncoder climberEncoder;
 
-  private Climber() {
+  public Climber() {
     climberMotor = new CANSparkMax(Constants.ClimberConstants.ClimberMotorPort, MotorType.kBrushless);
 
     climberEncoder = climberMotor.getEncoder();
@@ -34,7 +34,7 @@ public class Climber extends SubsystemBase {
     climberMotor.setIdleMode(IdleMode.kCoast);
   }
 
-  public void setSpeed(double speed){
+  public void setVoltage(double speed){
     climberMotor.set(speed);
   }
 
@@ -44,14 +44,6 @@ public class Climber extends SubsystemBase {
 
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Climber/Encoder value", getEncoder());
-  }
-
-  public static Climber instance;
-  public static Climber getInstance(){
-    if (instance == null){
-      instance = new Climber();
-    }
-    return instance;
   }
 
   @Override
