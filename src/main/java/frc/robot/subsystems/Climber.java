@@ -11,44 +11,58 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
-  private CANSparkMax climberMotor;
-  private RelativeEncoder climberEncoder;
+  private DigitalInput m_ZeroLimit;  // we need to know when we are at the climber's bottom
+  private CANSparkMax m_climberMotor;
+  private RelativeEncoder m_climberEncoder;
 
   public Climber() {
-    climberMotor = new CANSparkMax(Constants.ClimberConstants.ClimberMotorPort, MotorType.kBrushless);
+    m_climberMotor = new CANSparkMax(Constants.ClimberConstants.kClimberMotorPort, MotorType.kBrushless);
+    m_climberMotor.restoreFactoryDefaults();
 
-    climberEncoder = climberMotor.getEncoder();
 
-    climberMotor.setSmartCurrentLimit(70);
-    climberMotor.setIdleMode(IdleMode.kBrake);
+    m_climberEncoder = m_climberMotor.getEncoder();
+    m_climberEncoder.setPosition(0);
+
+    m_climberMotor.setSmartCurrentLimit(70);
+    m_climberMotor.setIdleMode(IdleMode.kBrake);
+
+    m_ZeroLimit = new DigitalInput(Constants.ClimberConstants.kClimberZeroPort);
   }
 
   public void setBrake() {
-    climberMotor.setIdleMode(IdleMode.kBrake);
+    m_climberMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void setCoast() {
-    climberMotor.setIdleMode(IdleMode.kCoast);
+    m_climberMotor.setIdleMode(IdleMode.kCoast);
   }
 
-  public void setVoltage(double speed){
-    climberMotor.set(speed);
+  public void setVoltage(double voltage){
+    if ((m_ZeroLimit.get() && voltage < 0.0) || voltage >= 0.0) {
+      m_climberMotor.set(voltage);
+    }
   }
 
   public double getEncoder() {
-    return climberEncoder.getPosition();
+    return m_climberEncoder.getPosition();
   }
 
   public void updateSmartDashboard() {
-    SmartDashboard.putNumber("Climber/Encoder value", getEncoder());
+    SmartDashboard.putNumber("Climber/Encoder Value", getEncoder());
+    SmartDashboard.putNumber("Climber/Encoder Velocity", m_climberEncoder.getVelocity());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     updateSmartDashboard();
+    if (m_ZeroLimit.get() && getEncoder() != 0 ) { 
+      m_climberEncoder.setPosition(0); 
+    }
   }
 }
