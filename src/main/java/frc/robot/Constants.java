@@ -72,6 +72,10 @@ public final class Constants {
     public static final double kDistD = 0;
   }
 
+  public static final class ClimberConstants {
+    public static final int ClimberMotorPort = 2;
+  }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
   }
