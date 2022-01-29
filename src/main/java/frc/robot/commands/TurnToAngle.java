@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -35,6 +36,10 @@ public class TurnToAngle extends PIDCommand {
     // setpoint before it is considered as having reached the reference
     getController()
         .setTolerance(DriveConstants.kTurnToleranceDeg, DriveConstants.kTurnRateToleranceDegPerS);
+
+    SmartDashboard.putNumber("Setpoint", targetAngleDegrees);
+    SmartDashboard.putNumber("Current Heading", drive.getHeading());
+    SmartDashboard.putNumber("Position Error", getController().getPositionError());
   }
 
   @Override
