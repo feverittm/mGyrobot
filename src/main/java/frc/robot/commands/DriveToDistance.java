@@ -4,39 +4,49 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveToDistance extends PIDCommand {
-  /** Creates a new DriveToDistance.
+/** A command that will turn the robot to the specified angle using a motion profile. */
+public class DriveToDistance extends ProfiledPIDCommand {
+  /**
+   * Turns to robot to the specified angle using a motion profile.
    *
-   * @param targetDistance The angle to turn to
+   * @param targetAngleDegrees The angle to turn to
    * @param drive The drive subsystem to use
    */
-  public DriveToDistance(double targetDistance, DriveSubsystem drive) {
+  public DriveToDistance(double targetDistanceInches, DriveSubsystem drive) {
     super(
-        // The controller that the command will use
-        new PIDController(DriveConstants.kDistP, DriveConstants.kDistI, DriveConstants.kDistD),
-        // This should return the measurement
-        drive::getAverageEncoderDistance,
+        new ProfiledPIDController(
+            DriveConstants.kDistP,
+            DriveConstants.kDistI,
+            DriveConstants.kDistD,
+            new TrapezoidProfile.Constraints(
+                DriveConstants.kMaxTurnRateDegPerS,
+                DriveConstants.kMaxTurnAccelerationDegPerSSquared)),
+        // Close loop on heading
+        drive::getDistanceInches,
         // Set reference to target
-        targetDistance,
-        // Pipe output to drive the robot
-        output -> drive.arcadeDrive(output, 0),
+        targetDistanceInches,
+        // Pipe output to turn robot
+        (output, setpoint) -> drive.arcadeDrive(0, output),
         // Require the drive
         drive);
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
+
+    // Set the controller to be continuous (because it is an angle controller)
+    getController().enableContinuousInput(-180, 180);
+    // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
+    // setpoint before it is considered as having reached the reference
+    getController()
+        .setTolerance(DriveConstants.kTurnToleranceDeg, DriveConstants.kTurnRateToleranceDegPerS);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    // End when the controller is at the reference.
+    return getController().atGoal();
   }
 }
