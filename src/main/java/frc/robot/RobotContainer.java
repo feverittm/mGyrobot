@@ -10,7 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -82,11 +82,14 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(m_driverController, Button.kX.value)
-        .whenPressed(new TurnToAngle(90, m_robotDrive).withTimeout(5));
+        .whenPressed(new TurnToAngleProfiled(90, m_robotDrive).withTimeout(5));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whenPressed(new DriveToDistance(48, m_robotDrive).withTimeout(5));
 
     // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
     new JoystickButton(m_driverController, Button.kB.value)
-        .whenPressed(new TurnToAngle(-90, m_robotDrive).withTimeout(5));
+        .whenPressed(new TurnToAngleProfiled(-90, m_robotDrive).withTimeout(5));
 
     new JoystickButton(m_driverController, Button.kA.value)
         .whenPressed(() -> m_robotDrive.resetRobot());

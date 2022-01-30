@@ -15,7 +15,7 @@ public class DriveToDistance extends ProfiledPIDCommand {
   /**
    * Turns to robot to the specified angle using a motion profile.
    *
-   * @param targetAngleDegrees The angle to turn to
+   * @param targetDistanceInches The distance in Inches to run
    * @param drive The drive subsystem to use
    */
   public DriveToDistance(double targetDistanceInches, DriveSubsystem drive) {
@@ -32,12 +32,10 @@ public class DriveToDistance extends ProfiledPIDCommand {
         // Set reference to target
         targetDistanceInches,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.arcadeDrive(0, output),
+        (output, setpoint) -> drive.arcadeDrive(output, 0),
         // Require the drive
         drive);
 
-    // Set the controller to be continuous (because it is an angle controller)
-    getController().enableContinuousInput(-180, 180);
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
     getController()
