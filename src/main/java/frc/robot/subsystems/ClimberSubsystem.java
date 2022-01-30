@@ -22,6 +22,10 @@ public class ClimberSubsystem extends SubsystemBase {
     m_encoder = m_motor.getEncoder();
   }
 
+  public double getEncoder() {
+    return m_encoder.getPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
