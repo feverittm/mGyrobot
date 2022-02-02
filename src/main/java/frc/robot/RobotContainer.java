@@ -4,21 +4,26 @@
 
 package frc.robot;
 
-import static edu.wpi.first.wpilibj.PS4Controller.Button;
+import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.TurnToAngleProfiled;
+<<<<<<< HEAD
 //import frc.robot.subsystems.Climber;
+=======
+import frc.robot.subsystems.ClimberSubsystem;
+>>>>>>> 523708ba3640dffb1d10ae1e16a343dd029687da
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,10 +34,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+<<<<<<< HEAD
   // private final Climber m_climber = new Climber(); // enable when the Climber is attached
+=======
+  private final ClimberSubsystem m_climber = new ClimberSubsystem();
+>>>>>>> 523708ba3640dffb1d10ae1e16a343dd029687da
 
   // The driver's controller
-  PS4Controller m_driverController = new PS4Controller(OIConstants.kDriverControllerPort);
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,12 +68,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kR1.value)
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
         .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
         .whenReleased(() -> m_robotDrive.setMaxOutput(1));
 
     // Stabilize robot to drive straight with gyro when left bumper is held
-    new JoystickButton(m_driverController, Button.kL1.value)
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .whenHeld(
             new PIDCommand(
                 new PIDController(
@@ -81,12 +90,22 @@ public class RobotContainer {
                 m_robotDrive));
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new TurnToAngle(90, m_robotDrive).withTimeout(5));
+    new JoystickButton(m_driverController, Button.kB.value)
+        .whenPressed(new TurnToAngleProfiled(90, m_robotDrive).withTimeout(5));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+        .whenPressed(new DriveToDistance(48, m_robotDrive).withTimeout(5));
 
     // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
-    new JoystickButton(m_driverController, Button.kCircle.value)
+    new JoystickButton(m_driverController, Button.kX.value)
         .whenPressed(new TurnToAngleProfiled(-90, m_robotDrive).withTimeout(5));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whenPressed(() -> m_robotDrive.resetRobot());
+
+    new POVButton(m_driverController, 0)
+        .whenPressed(() -> m_climber.climb(0.2))
+        .whenReleased(() -> m_climber.climb(0));
   }
 
   /**

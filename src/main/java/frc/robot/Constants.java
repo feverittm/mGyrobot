@@ -49,7 +49,7 @@ public final class Constants {
     public static final double kWheelDiameterInches = 6;
     public static final double kWheelGearboxRatio = 7.31;
     public static final double kEncoderDistancePerPulse =
-        (kWheelGearboxRatio * kWheelDiameterInches * Math.PI) / (double) kEncoderCPR;
+        (kWheelDiameterInches * Math.PI) / ((double) kEncoderCPR * kWheelGearboxRatio);
 
     public static final boolean kGyroReversed = false;
 
@@ -57,7 +57,7 @@ public final class Constants {
     public static final double kStabilizationI = 0.5;
     public static final double kStabilizationD = 0;
 
-    public static final double kTurnP = 0.01;
+    public static final double kTurnP = 0.001;
     public static final double kTurnI = 0;
     public static final double kTurnD = 0;
 

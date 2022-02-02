@@ -62,11 +62,17 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightMotor2.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
     resetEncoders();
+    zeroHeading();
 
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
     m_rightMotors.setInverted(true);
+  }
+
+  public void resetRobot() {
+    resetEncoders();
+    zeroHeading();
   }
 
   /**
@@ -91,7 +97,11 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftMotor1.getSelectedSensorPosition() + m_rightMotor1.getSelectedSensorPosition()) / 2.0;
+    return (m_leftMotor1.getSelectedSensorPosition() - m_rightMotor1.getSelectedSensorPosition()) / 2.0;
+  }
+
+  public double getDistanceInches() {
+    return (getAverageEncoderDistance() * Constants.DriveConstants.kEncoderDistancePerPulse);
   }
 
   /**
@@ -144,6 +154,8 @@ public class DriveSubsystem extends SubsystemBase {
     
     SmartDashboard.putNumber("Left Encoder", m_leftMotor1.getSelectedSensorPosition());
     SmartDashboard.putNumber("Right Encoder", m_rightMotor1.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Average Distance", getDistanceInches());
+
     SmartDashboard.putNumber("Gyro Heading", m_ahrs.getAngle());
   }
 }
