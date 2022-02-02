@@ -10,14 +10,16 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.TurnToAngleProfiled;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ClimberSubsystem m_climber = new ClimberSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -79,15 +82,22 @@ public class RobotContainer {
                 m_robotDrive));
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+    new JoystickButton(m_driverController, Button.kB.value)
+        .whenPressed(new TurnToAngleProfiled(90, m_robotDrive).withTimeout(5));
+
     new JoystickButton(m_driverController, Button.kX.value)
-        .whenPressed(new TurnToAngle(90, m_robotDrive).withTimeout(5));
+        .whenPressed(new DriveToDistance(48, m_robotDrive).withTimeout(5));
 
     // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
-    new JoystickButton(m_driverController, Button.kB.value)
-        .whenPressed(new TurnToAngle(-90, m_robotDrive).withTimeout(5));
+    new JoystickButton(m_driverController, Button.kX.value)
+        .whenPressed(new TurnToAngleProfiled(-90, m_robotDrive).withTimeout(5));
 
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_driverController, Button.kY.value)
         .whenPressed(() -> m_robotDrive.resetRobot());
+
+    new POVButton(m_driverController, 0)
+        .whenPressed(() -> m_climber.climb(0.2))
+        .whenReleased(() -> m_climber.climb(0));
   }
 
   /**
