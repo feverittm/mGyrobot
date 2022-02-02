@@ -75,6 +75,7 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int kClimberMotorPort = 2;
     public static final int kClimberZeroPort = 1;
+    public static final int kClimberMaxHeight = 1000;
 
   }
 
