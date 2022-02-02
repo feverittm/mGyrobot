@@ -12,11 +12,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.TurnToAngleProfiled;
-<<<<<<< HEAD
-//import frc.robot.subsystems.Climber;
-=======
 import frc.robot.subsystems.ClimberSubsystem;
->>>>>>> 523708ba3640dffb1d10ae1e16a343dd029687da
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -34,11 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-<<<<<<< HEAD
-  // private final Climber m_climber = new Climber(); // enable when the Climber is attached
-=======
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
->>>>>>> 523708ba3640dffb1d10ae1e16a343dd029687da
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
