@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Climb;
 import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -32,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public class RobotContainer {
     // The robot's subsystems
-    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    //private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem();
 
     // The driver's controller
@@ -45,6 +46,7 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
 
+        /*
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
         m_robotDrive.setDefaultCommand(
@@ -54,6 +56,7 @@ public class RobotContainer {
                         () -> m_robotDrive.arcadeDrive(
                                 m_driverController.getLeftY(), m_driverController.getRightX()),
                         m_robotDrive));
+        */
     }
 
     /**
@@ -66,6 +69,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        /*
         // Drive at half speed when the right bumper is held
         new JoystickButton(m_driverController, Button.kRightBumper.value)
                 .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
@@ -103,9 +107,14 @@ public class RobotContainer {
         new JoystickButton(m_driverController, Button.kY.value)
                 .whenPressed(() -> m_robotDrive.resetRobot());
 
+        */
         new POVButton(m_driverController, 0)
                 .whenPressed(() -> m_climber.climb(0.2))
                 .whenReleased(() -> m_climber.climb(0));
+
+        new POVButton(m_driverController, 180)
+                .whenPressed(new RunCommand(() -> m_climber.climb(-0.2), m_climber))
+                .whenReleased(new RunCommand(() -> m_climber.climb(0), m_climber));
     }
 
     /**

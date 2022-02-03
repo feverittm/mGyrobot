@@ -28,7 +28,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public boolean getZeroSw() {
-    return m_zerosw.get();
+    return !m_zerosw.get();
   }
 
   public double getEncoder() {
@@ -36,12 +36,16 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void climb(double speed) {
-    if (speed < 0 && getZeroSw()) {
+    SmartDashboard.putNumber("Speed", speed);
+    SmartDashboard.putBoolean("ZeroSW", getZeroSw());
+    if ((speed < 0) && getZeroSw()) {
+      System.out.println("In neg stop");
       m_motor.set(0.0);
-    } else if (speed > 0 && getEncoder() >= Constants.ClimberConstants.kClimberMaxHeight) {
+    } else if ((speed > 0) && getEncoder() >= Constants.ClimberConstants.kClimberMaxHeight) {
       m_motor.set(0.0);
-    }
+    } else {
       m_motor.set(speed);
+    }
   }
 
   public void stop() {
@@ -52,11 +56,11 @@ public class ClimberSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (getZeroSw()) {
-      m_encoder.setPosition(0);
-    }
+    //if (getZeroSw()) {
+    //  m_encoder.setPosition(0);
+    //}
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Climber Position", m_encoder.getPosition());
-    SmartDashboard.putBoolean("Zero Switch", getZeroSw());
+    //SmartDashboard.putNumber("Climber Position", m_encoder.getPosition());
+    //SmartDashboard.putBoolean("Zero Switch", getZeroSw());
   }
 }
