@@ -109,8 +109,8 @@ public class RobotContainer {
 
         */
         new POVButton(m_driverController, 0)
-                .whenPressed(() -> m_climber.climb(0.2))
-                .whenReleased(() -> m_climber.climb(0));
+                .whenPressed(new RunCommand(() -> m_climber.climb(0.2), m_climber))
+                .whenReleased(new RunCommand(() -> m_climber.climb(0), m_climber));
 
         new POVButton(m_driverController, 180)
                 .whenPressed(new RunCommand(() -> m_climber.climb(-0.2), m_climber))

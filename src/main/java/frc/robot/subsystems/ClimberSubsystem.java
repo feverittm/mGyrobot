@@ -19,6 +19,7 @@ public class ClimberSubsystem extends SubsystemBase {
       MotorType.kBrushless);
   private final DigitalInput m_zerosw = new DigitalInput(Constants.ClimberConstants.kClimberZeroPort);
   private final RelativeEncoder m_encoder;
+  private static int loop = 0;
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
@@ -36,10 +37,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void climb(double speed) {
-    SmartDashboard.putNumber("Speed", speed);
-    SmartDashboard.putBoolean("ZeroSW", getZeroSw());
-    if ((speed < 0) && getZeroSw()) {
-      System.out.println("In neg stop");
+    if ((speed < 0) && (getZeroSw() || getEncoder() <= 0)) {
       m_motor.set(0.0);
     } else if ((speed > 0) && getEncoder() >= Constants.ClimberConstants.kClimberMaxHeight) {
       m_motor.set(0.0);
@@ -51,16 +49,19 @@ public class ClimberSubsystem extends SubsystemBase {
   public void stop() {
     m_motor.set(0);
     m_motor.stopMotor();
-
   }
 
   @Override
   public void periodic() {
-    //if (getZeroSw()) {
-    //  m_encoder.setPosition(0);
-    //}
+    loop += 1;
+    if (getZeroSw()) {
+      m_encoder.setPosition(0);
+    }
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Climber Position", m_encoder.getPosition());
-    //SmartDashboard.putBoolean("Zero Switch", getZeroSw());
+    if (loop % 10 == 0) {
+      SmartDashboard.putNumber("Climber Position", getEncoder());
+      SmartDashboard.putBoolean("Zero Switch", getZeroSw());
+      loop=0;
+    }
   }
 }
