@@ -48,8 +48,8 @@ public final class Constants {
     public static final int kEncoderCPR = 2048;
     public static final double kWheelDiameterInches = 6;
     public static final double kWheelGearboxRatio = 7.31;
-    public static final double kEncoderDistancePerPulse =
-        (kWheelDiameterInches * Math.PI) / ((double) kEncoderCPR * kWheelGearboxRatio);
+    public static final double kEncoderDistancePerPulse = (kWheelDiameterInches * Math.PI)
+        / ((double) kEncoderCPR * kWheelGearboxRatio);
 
     public static final boolean kGyroReversed = false;
 
@@ -73,9 +73,9 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int kClimberMotorPort = 2;
-    public static final int kClimberZeroPort = 1;
-
+    public static final int kClimberMotorPort = 9;
+    public static final int kClimberZeroPort = 0;
+    public static final int kClimberMaxHeight = 100;
   }
 
   public static final class OIConstants {
