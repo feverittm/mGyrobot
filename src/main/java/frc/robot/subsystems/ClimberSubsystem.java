@@ -4,37 +4,28 @@
 
 package frc.robot.subsystems;
 
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
->>>>>>> feature/AddClimber
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-<<<<<<< HEAD
 import com.revrobotics.CANSparkMax.IdleMode;
-=======
->>>>>>> feature/AddClimber
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ClimberSubsystem extends SubsystemBase {
   private final CANSparkMax m_motor = new CANSparkMax(Constants.ClimberConstants.kClimberMotorPort,
       MotorType.kBrushless);
-<<<<<<< HEAD
   private final DigitalInput m_zerosw = new DigitalInput(Constants.ClimberConstants.kClimberZeroPort);
   private final RelativeEncoder m_encoder;
   private static int loop = 0;
-=======
   private final RelativeEncoder m_encoder;
->>>>>>> feature/AddClimber
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
     m_motor.restoreFactoryDefaults();
-<<<<<<< HEAD
     m_motor.setIdleMode(IdleMode.kBrake);
     m_encoder = m_motor.getEncoder();
   }
@@ -43,16 +34,10 @@ public class ClimberSubsystem extends SubsystemBase {
     return !m_zerosw.get();
   }
 
-=======
-    m_encoder = m_motor.getEncoder();
-  }
-
->>>>>>> feature/AddClimber
   public double getEncoder() {
     return m_encoder.getPosition();
   }
 
-<<<<<<< HEAD
   public void climb(double speed) {
     if ((speed < 0) && (getZeroSw() || getEncoder() <= 0)) {
       m_motor.set(0.0);
@@ -80,10 +65,5 @@ public class ClimberSubsystem extends SubsystemBase {
       SmartDashboard.putBoolean("Zero Switch", getZeroSw());
       loop=0;
     }
-=======
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
->>>>>>> feature/AddClimber
   }
 }
