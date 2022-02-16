@@ -80,9 +80,9 @@ public final class Constants {
     public static final double kClimbP = 0.1;
     public static final double kClimbI = 0;
     public static final double kClimbD = 0;
-
-    public static final double kMaxClimbRateDegPerS = 100;
-    public static final double kMaxClimbAccelerationDegPerSSquared = 300;
+    public static final double kClimbTolerance = 5.0;
+    public static final double kMaxClimbRateDegPerS = 20;
+    public static final double kMaxClimbAccelerationDegPerSSquared = 30;
 
     public static final double kClimbToleranceDeg = 5;
     public static final double kClimbRateToleranceDegPerS = 10; // degrees per second
