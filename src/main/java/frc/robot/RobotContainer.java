@@ -98,7 +98,7 @@ public class RobotContainer {
 
         // Turn to -90 degrees with a profile when the Circle button is pressed, with a
         // 5 second timeout
-        new JoystickButton(m_driverController, Button.kX.value)
+        new JoystickButton(m_driverController, Button.kA.value)
                 .whenPressed(new TurnToAngleProfiled(-90, m_robotDrive).withTimeout(5));
 
         new JoystickButton(m_driverController, Button.kY.value)
