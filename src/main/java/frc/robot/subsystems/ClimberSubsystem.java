@@ -62,7 +62,7 @@ public class ClimberSubsystem extends SubsystemBase {
     if (loop % 10 == 0) {
       SmartDashboard.putNumber("Climber Extension", getExtension());
       SmartDashboard.putBoolean("Zero Switch", getZeroSw());
-      loop=0;
+      loop = 0;
     }
   }
 }
