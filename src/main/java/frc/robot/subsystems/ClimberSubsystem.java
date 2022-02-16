@@ -21,7 +21,6 @@ public class ClimberSubsystem extends SubsystemBase {
   private final DigitalInput m_zerosw = new DigitalInput(Constants.ClimberConstants.kClimberZeroPort);
   private final RelativeEncoder m_encoder;
   private static int loop = 0;
-  private final RelativeEncoder m_encoder;
 
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
