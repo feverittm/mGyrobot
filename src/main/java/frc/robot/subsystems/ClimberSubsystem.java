@@ -60,6 +60,7 @@ public class ClimberSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     if (loop % 10 == 0) {
       SmartDashboard.putNumber("Climber Position", getEncoder());
+      SmartDashboard.putNumber("Climber Velocity", m_encoder.getVelocity());
       SmartDashboard.putBoolean("Zero Switch", getZeroSw());
       loop=0;
     }
