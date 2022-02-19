@@ -74,7 +74,7 @@ public final class Constants {
 
   public static final class ClimberConstants {
     public static final int kClimberMotorPort = 9;
-    public static final int kClimberZeroPort = 1;
+    public static final int kClimberZeroPort = 0;
     public static final int kClimberMaxHeight = 100;
   }
 
@@ -83,9 +83,9 @@ public final class Constants {
     public static final double kClimbI = 0.0;
     public static final double kClimbD = 0.0;
     public static final double kClimbTolerance = 5.0;
-    public static final double kMaxClimbRateDegPerS = 10;
-    public static final double kMaxClimbAccelerationDegPerSSquared = 10;
-    public static final double kClimbToleranceDeg = 5;
+    public static final double kMaxClimbRateDegPerS = 20;
+    public static final double kMaxClimbAccelerationDegPerSSquared = 20;
+    public static final double kClimbToleranceDeg = 2;
     public static final double kClimbRateToleranceDegPerS = 10; // degrees per second
   }
 
