@@ -25,8 +25,8 @@ public class DriveToDistance extends ProfiledPIDCommand {
             DriveConstants.kDistI,
             DriveConstants.kDistD,
             new TrapezoidProfile.Constraints(
-                DriveConstants.kMaxTurnRateDegPerS,
-                DriveConstants.kMaxTurnAccelerationDegPerSSquared)),
+                DriveConstants.kMaxDistInchesPerS,
+                DriveConstants.kMaxDistInchesPerSSquared)),
         // Close loop on heading
         drive::getDistanceInches,
         // Set reference to target

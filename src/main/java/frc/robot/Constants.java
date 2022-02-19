@@ -61,8 +61,8 @@ public final class Constants {
     public static final double kTurnI = 0;
     public static final double kTurnD = 0;
 
-    public static final double kMaxTurnRateDegPerS = 100;
-    public static final double kMaxTurnAccelerationDegPerSSquared = 300;
+    public static final double kMaxTurnRateDegPerS = 50;
+    public static final double kMaxTurnAccelerationDegPerSSquared = 90;
 
     public static final double kTurnToleranceDeg = 5;
     public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
@@ -70,6 +70,11 @@ public final class Constants {
     public static final double kDistP = 0.1;
     public static final double kDistI = 0;
     public static final double kDistD = 0;
+    public static final double kMaxDistInchesPerS = 100;
+    public static final double kMaxDistInchesPerSSquared = 300;
+    public static final double kDistToleranceDeg = 5;
+    public static final double kDistSpedToleranceDegPerS = 10; // degrees per second
+
   }
 
   public static final class ClimberConstants {

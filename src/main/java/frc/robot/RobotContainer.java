@@ -16,7 +16,6 @@ import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,9 +32,8 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public class RobotContainer {
     // The robot's subsystems
-    //private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem();
-    //private final PIDClimberSubsystem m_pidclimber = new PIDClimberSubsystem();
 
     // The driver's controller
     XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -47,7 +45,6 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
 
-        /*
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
         m_robotDrive.setDefaultCommand(
@@ -57,7 +54,6 @@ public class RobotContainer {
                         () -> m_robotDrive.arcadeDrive(
                                 m_driverController.getLeftY(), m_driverController.getRightX()),
                         m_robotDrive));
-        */
     }
 
     /**
@@ -70,11 +66,10 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        /*
         // Drive at half speed when the right bumper is held
         new JoystickButton(m_driverController, Button.kRightBumper.value)
-                .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
-                .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+                .whenPressed(() -> m_robotDrive.setMaxOutput(1))
+                .whenReleased(() -> m_robotDrive.setMaxOutput(0.5));
 
         // Stabilize robot to drive straight with gyro when left bumper is held
         new JoystickButton(m_driverController, Button.kLeftBumper.value)
@@ -97,18 +92,12 @@ public class RobotContainer {
         new JoystickButton(m_driverController, Button.kB.value)
                 .whenPressed(new TurnToAngleProfiled(90, m_robotDrive).withTimeout(5));
 
-        new JoystickButton(m_driverController, Button.kX.value)
+        new JoystickButton(m_driverController, Button.kA.value)
                 .whenPressed(new DriveToDistance(48, m_robotDrive).withTimeout(5));
-
-        // Turn to -90 degrees with a profile when the Circle button is pressed, with a
-        // 5 second timeout
-        new JoystickButton(m_driverController, Button.kX.value)
-                .whenPressed(new TurnToAngleProfiled(-90, m_robotDrive).withTimeout(5));
 
         new JoystickButton(m_driverController, Button.kY.value)
                 .whenPressed(() -> m_robotDrive.resetRobot());
 
-        */
         new POVButton(m_driverController, 0)
                 .whenPressed(new RunCommand(() -> m_climber.climb(0.2), m_climber))
                 .whenReleased(new RunCommand(() -> m_climber.climb(0), m_climber));
@@ -131,7 +120,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // no auto
-        return new InstantCommand();
+        return new DriveToDistance(96, m_robotDrive);
     }
 }
