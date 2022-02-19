@@ -28,7 +28,7 @@ public class ClimbToHeight extends ProfiledPIDCommand {
                 PIDClimberConstants.kMaxClimbRateDegPerS,
                 PIDClimberConstants.kMaxClimbAccelerationDegPerSSquared)),
         // Close loop on heading
-        climb::getEncoder,
+        climb::getExtension,
         // Set reference to target
         targetHeightInches,
         // Pipe output to turn robot
