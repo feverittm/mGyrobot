@@ -45,6 +45,9 @@ public final class Constants {
     public static final int kRightMotor1Port = 15;
     public static final int kRightMotor2Port = 16;
 
+    public static final double kDriveMaxSpeed = 0.4;
+    public static final double kDriveTurboSpeed = 0.8;
+
     public static final int kEncoderCPR = 2048;
     public static final double kWheelDiameterInches = 6;
     public static final double kWheelGearboxRatio = 7.31;

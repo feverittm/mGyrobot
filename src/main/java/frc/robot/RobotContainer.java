@@ -68,29 +68,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Drive at half speed when the right bumper is held
         new JoystickButton(m_driverController, Button.kRightBumper.value)
-                .whenPressed(() -> m_robotDrive.setMaxOutput(1))
-                .whenReleased(() -> m_robotDrive.setMaxOutput(0.5));
-
-        // Stabilize robot to drive straight with gyro when left bumper is held
-        new JoystickButton(m_driverController, Button.kLeftBumper.value)
-                .whenHeld(
-                        new PIDCommand(
-                                new PIDController(
-                                        DriveConstants.kStabilizationP,
-                                        DriveConstants.kStabilizationI,
-                                        DriveConstants.kStabilizationD),
-                                // Close the loop on the turn rate
-                                m_robotDrive::getTurnRate,
-                                // Setpoint is 0
-                                0,
-                                // Pipe the output to the turning controls
-                                output -> m_robotDrive.arcadeDrive(m_driverController.getLeftY(), output),
-                                // Require the robot drive
-                                m_robotDrive));
-
-        // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-        new JoystickButton(m_driverController, Button.kB.value)
-                .whenPressed(new TurnToAngleProfiled(90, m_robotDrive).withTimeout(5));
+                .whenPressed(() -> m_robotDrive.setMaxOutput(Constants.DriveConstants.kDriveTurboSpeed))
+                .whenReleased(() -> m_robotDrive.setMaxOutput(Constants.DriveConstants.kDriveMaxSpeed));
 
         new JoystickButton(m_driverController, Button.kA.value)
                 .whenPressed(new DriveToDistance(48, m_robotDrive).withTimeout(5));
@@ -102,16 +81,9 @@ public class RobotContainer {
                 .whenPressed(new RunCommand(() -> m_climber.climb(0.2), m_climber))
                 .whenReleased(new RunCommand(() -> m_climber.climb(0), m_climber));
 
-        new POVButton(m_driverController, 90)
-                .whenPressed(new ClimbToHeight(20, m_climber).withTimeout(5));
-
         new POVButton(m_driverController, 180)
                 .whenPressed(new RunCommand(() -> m_climber.climb(-0.2), m_climber))
                 .whenReleased(new RunCommand(() -> m_climber.climb(0), m_climber));
-
-        new POVButton(m_driverController, 270)
-                .whenPressed(new ClimbToHeight(80, m_climber).withTimeout(5));
-
     }
 
     /**

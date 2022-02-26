@@ -61,7 +61,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightMotor1.configPeakOutputForward(1, Constants.kTimeoutMs);
     m_rightMotor2.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
-    m_drive.setMaxOutput(0.5);
+    m_drive.setMaxOutput(Constants.DriveConstants.kDriveMaxSpeed);
 
     resetEncoders();
     zeroHeading();
