@@ -25,11 +25,17 @@ public class ClimberSubsystem extends SubsystemBase {
   public ClimberSubsystem() {
     m_motor.restoreFactoryDefaults();
     m_motor.setIdleMode(IdleMode.kBrake);
+    m_motor.setInverted(true);
     m_encoder = m_motor.getEncoder();
+    m_encoder.setPosition(0);
   }
 
   public boolean getZeroSw() {
     return !m_zerosw.get();
+  }
+
+  public void resetEncoder() {
+    m_encoder.setPosition(0);
   }
 
   public double getExtension() {

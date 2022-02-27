@@ -5,11 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class AccelDrive extends CommandBase {
-  /** Creates a new AccelDrive. */
-  public AccelDrive() {
+public class SetBrakeMode extends CommandBase {
+  /** Creates a new SetBrakeMode. */
+  private DriveSubsystem m_drive;
+  private Boolean m_setBrake;
+
+  public SetBrakeMode(boolean _brake, DriveSubsystem _drive) {
     // Use addRequirements() here to declare subsystem dependencies.
+    //addRequirements(m_drive);
+    m_drive = _drive;
+    m_setBrake = _brake;
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +26,9 @@ public class AccelDrive extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drive.setBrakeMode(m_setBrake);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -27,6 +37,6 @@ public class AccelDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -45,8 +45,8 @@ public final class Constants {
     public static final int kRightMotor1Port = 15;
     public static final int kRightMotor2Port = 16;
 
-    public static final double kDriveMaxSpeed = 0.4;
-    public static final double kDriveTurboSpeed = 0.8;
+    public static final double kDriveMaxSpeed = 0.25;
+    public static final double kDriveTurboSpeed = 0.5;
 
     public static final int kEncoderCPR = 2048;
     public static final double kWheelDiameterInches = 6;
@@ -70,19 +70,19 @@ public final class Constants {
     public static final double kTurnToleranceDeg = 5;
     public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
 
-    public static final double kDistP = 0.1;
+    public static final double kDistP = 0.2;
     public static final double kDistI = 0;
     public static final double kDistD = 0;
-    public static final double kMaxDistInchesPerS = 100;
-    public static final double kMaxDistInchesPerSSquared = 300;
-    public static final double kDistToleranceDeg = 5;
+    public static final double kMaxDistInchesPerS = 30;
+    public static final double kMaxDistInchesPerSSquared = 50;
+    public static final double kDistToleranceDeg = 2;
     public static final double kDistSpedToleranceDegPerS = 10; // degrees per second
   }
 
   public static final class ClimberConstants {
-    public static final int kClimberMotorPort = 9;
+    public static final int kClimberMotorPort = 8;
     public static final int kClimberZeroPort = 0;
-    public static final int kClimberMaxHeight = 100;
+    public static final int kClimberMaxHeight = 120;
   }
 
   public static final class PIDClimberConstants {

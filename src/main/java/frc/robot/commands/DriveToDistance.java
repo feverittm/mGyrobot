@@ -32,7 +32,7 @@ public class DriveToDistance extends ProfiledPIDCommand {
         // Set reference to target
         targetDistanceInches,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.arcadeDrive(output, 0),
+        (output, setpoint) -> drive.arcadeDrive(-output, 0),
         // Require the drive
         drive);
 

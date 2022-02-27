@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -87,6 +88,16 @@ public class DriveSubsystem extends SubsystemBase {
     m_drive.arcadeDrive(fwd, rot);
   }
 
+  public void setBrakeMode(boolean brake) {
+    if (brake) {
+      m_leftMotor1.setNeutralMode(NeutralMode.Brake);
+      m_rightMotor1.setNeutralMode(NeutralMode.Brake);
+    } else {
+      m_leftMotor1.setNeutralMode(NeutralMode.Coast);
+      m_rightMotor1.setNeutralMode(NeutralMode.Coast);
+    }
+  }
+
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
     m_leftMotor1.setSelectedSensorPosition(0);
@@ -99,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftMotor1.getSelectedSensorPosition() - m_rightMotor1.getSelectedSensorPosition()) / 2.0;
+    return (m_rightMotor1.getSelectedSensorPosition() - m_leftMotor1.getSelectedSensorPosition()) / 2.0;
   }
 
   public double getDistanceInches() {
@@ -156,6 +167,8 @@ public class DriveSubsystem extends SubsystemBase {
     
     SmartDashboard.putNumber("Left Encoder", m_leftMotor1.getSelectedSensorPosition());
     SmartDashboard.putNumber("Right Encoder", m_rightMotor1.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Speed", m_rightMotor1.getSelectedSensorVelocity());
+
     SmartDashboard.putNumber("Average Distance", getDistanceInches());
 
     SmartDashboard.putNumber("Gyro Heading", m_ahrs.getAngle());
