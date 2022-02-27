@@ -18,7 +18,7 @@ public class LeaveTarmak extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetBrakeMode(true, m_drive),
-      new DriveToDistance(12, m_drive),
+      new DriveToDistance(-12, m_drive),
       new WaitCommand(3),
       new DriveToDistance(72, m_drive),
       new WaitCommand(5),
