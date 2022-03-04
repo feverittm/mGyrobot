@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -93,6 +94,12 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kA.value)
         .whenPressed(() -> m_robotDrive.resetRobot());
+
+    new POVButton(m_driverController, 0)
+        .whenPressed(() -> m_climber.move(-0.2));
+
+    new POVButton(m_driverController, 90)
+        .whenPressed(() -> m_climber.move(0.2));
   }
 
   /**
